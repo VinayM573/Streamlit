@@ -5,8 +5,9 @@ import streamlit as st
 import time
 
 # Set your target time (Tonight 12 AM)
-now = datetime.now()
+ist = pytz.timezone("Asia/Kolkata")
 
+now = datetime.now(ist)
 target = datetime(2026, 2, 14, 0, 0, 0)
 
 # If already past midnight today → set for next day
@@ -315,3 +316,4 @@ elif st.session_state.step == 4:
     for img in photos:
         placeholder.image(img, width=400)
         time.sleep(2)
+

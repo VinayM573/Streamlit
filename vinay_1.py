@@ -3,7 +3,7 @@ import time
 from datetime import datetime, timedelta
 import streamlit as st
 import time
-
+import pytz
 # Set your target time (Tonight 12 AM)
 ist = pytz.timezone("Asia/Kolkata")
 
@@ -316,4 +316,5 @@ elif st.session_state.step == 4:
     for img in photos:
         placeholder.image(img, width=400)
         time.sleep(2)
+
 

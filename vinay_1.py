@@ -1,47 +1,46 @@
-import streamlit as st
-import time
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 import streamlit as st
 import time
-import pytz
-# Set your target time (Tonight 12 AM)
-ist = pytz.timezone("Asia/Kolkata")
+
+# IST timezone
+ist = ZoneInfo("Asia/Kolkata")
 
 now = datetime.now(ist)
-target = datetime(2026, 2, 14, 0, 0, 0)
 
-# If already past midnight today → set for next day
-if now > target:
-    target = target + timedelta(days=1)
+# Set target date (example: 14 Feb 2026 12:00 AM IST)
+target = datetime(2026, 2, 14, 0, 0, 0, tzinfo=ist)
 
 remaining = (target - now).total_seconds()
 
-# If still before midnight → show countdown
 if remaining > 0:
-    st.markdown("""
-        <h1 style='text-align:center;color:white;'>💖 Something Special Unlocks At Midnight 💖</h1>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        "<h1 style='text-align:center;color:white;'>💖 Something Special Unlocks At Midnight 💖</h1>",
+        unsafe_allow_html=True
+    )
 
-    countdown_placeholder = st.empty()
+    countdown = st.empty()
 
     while remaining > 0:
+        now = datetime.now(ist)
+        remaining = (target - now).total_seconds()
+
+        if remaining <= 0:
+            break
+
         hours = int(remaining // 3600)
         minutes = int((remaining % 3600) // 60)
         seconds = int(remaining % 60)
 
-        countdown_placeholder.markdown(
-            f"""
-            <h2 style='text-align:center;color:white;'>
-            ⏳ {hours:02d}:{minutes:02d}:{seconds:02d}
-            </h2>
-            """,
+        countdown.markdown(
+            f"<h2 style='text-align:center;color:white;'>⏳ {hours:02d}:{minutes:02d}:{seconds:02d}</h2>",
             unsafe_allow_html=True
         )
 
         time.sleep(1)
-        remaining -= 1
 
     st.rerun()
+
 
 st.set_page_config(page_title="💖 For Someone Special", page_icon="🌹")
 
@@ -316,5 +315,6 @@ elif st.session_state.step == 4:
     for img in photos:
         placeholder.image(img, width=400)
         time.sleep(2)
+
 
 

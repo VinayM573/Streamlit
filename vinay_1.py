@@ -3,6 +3,7 @@ from zoneinfo import ZoneInfo
 import streamlit as st
 import time
 
+st.markdown('<div class="title">💌 A Special Surprise 💌</div>', unsafe_allow_html=True)
 # IST timezone
 ist = ZoneInfo("Asia/Kolkata")
 
@@ -75,7 +76,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="title">💌 A Special Surprise 💌</div>', unsafe_allow_html=True)
 st.write("")
 
 # -----------------------
@@ -315,6 +315,7 @@ elif st.session_state.step == 4:
     for img in photos:
         placeholder.image(img, width=400)
         time.sleep(2)
+
 
 
 

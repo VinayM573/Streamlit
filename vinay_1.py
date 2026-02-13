@@ -1,5 +1,46 @@
 import streamlit as st
 import time
+from datetime import datetime, timedelta
+import streamlit as st
+import time
+
+# Set your target time (Tonight 12 AM)
+now = datetime.now()
+
+target = datetime(2026, 2, 14, 0, 0, 0)
+
+# If already past midnight today → set for next day
+if now > target:
+    target = target + timedelta(days=1)
+
+remaining = (target - now).total_seconds()
+
+# If still before midnight → show countdown
+if remaining > 0:
+    st.markdown("""
+        <h1 style='text-align:center;color:white;'>💖 Something Special Unlocks At Midnight 💖</h1>
+    """, unsafe_allow_html=True)
+
+    countdown_placeholder = st.empty()
+
+    while remaining > 0:
+        hours = int(remaining // 3600)
+        minutes = int((remaining % 3600) // 60)
+        seconds = int(remaining % 60)
+
+        countdown_placeholder.markdown(
+            f"""
+            <h2 style='text-align:center;color:white;'>
+            ⏳ {hours:02d}:{minutes:02d}:{seconds:02d}
+            </h2>
+            """,
+            unsafe_allow_html=True
+        )
+
+        time.sleep(1)
+        remaining -= 1
+
+    st.rerun()
 
 st.set_page_config(page_title="💖 For Someone Special", page_icon="🌹")
 
